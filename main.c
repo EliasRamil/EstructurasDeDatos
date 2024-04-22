@@ -35,9 +35,16 @@ int main(void)
     puts("");
     mostrarEnteros(obtenerDatoDeLaLista(listEnteros, posicionrDatoEnLaLista(listEnteros, iNum3)));
 
+    puts("");
+    ordenarLista(listEnteros, compararEnteros, descendente);
+    mostrarLista(listEnteros, mostrarEnteros);
+
     destruirLista(listEnteros);
 
-    printf("\n-----------------------------------------------------------------------------------------\n");
+    printf("\n\nPresionar Enter para continuar...\n");
+    getchar();
+    limpiarPantalla();
+   //------------------------------------------------------------------------------------------------
 
     Lista* listPersona = crearLista();
 
@@ -46,7 +53,6 @@ int main(void)
     agregarALaLista(listPersona, 2, crearPersona("985", "Fernando", 9, 8, 2015));
     agregarAlInicio(listPersona, crearPersona("375", "Luis", 22, 7, 1995));
 
-    puts("");
     mostrarLista(listPersona, mostrarPersonasLista);
 
     puts("");
@@ -56,7 +62,13 @@ int main(void)
     printf("\n---------------------------\n");
     mostrarPersonasLista(temp);
 
-    destruirLista(listPersona);
+    printf("\n---------------------------\n");
+    int edad = 28;
+    int resultado;
+
+    // Llamar a la función buscarDatoEnLaLista y mostrar el resultado
+    resultado = buscarDatoEnLaLista(listPersona, &edad, compararEdad);
+    mostrarPersonasLista(obtenerDatoDeLaLista(listPersona, resultado));
 
     puts("");
     return 0;

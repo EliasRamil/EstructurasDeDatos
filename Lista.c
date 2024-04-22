@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "Lista.h"
 
@@ -33,35 +32,7 @@ bool existePosicion(Lista* l, int iPosicion) {
     return ((iPosicion >= 0) && (iPosicion < (l->iTamanioLista))) ? true : false;
 }
 
-//-----------------------------------------------------Funciones de la lista---------------------------------------------------
-int posicionrDatoEnLaLista(Lista* l, DATO d){
-    Nodo* actual = l->inicio;
-    int iPos = DATO_NO_ENCONTRADO, i = 0;
-
-    while(iPos == DATO_NO_ENCONTRADO && actual != NULL){
-
-        if(actual->dato == d)
-            iPos = i;
-
-        i++;
-        actual = actual->siguiente;
-    }
-
-    return iPos;
-}
-
-void mostrarLista(Lista* l, void mostrarDato(DATO)){
-    DATO d;
-
-    for(int i=0; i<l->iTamanioLista; i++){
-        d = obtenerDatoDeLaLista(l, i);
-        printf("%d) ", i);
-        mostrarDato(d);
-        puts("");
-    }
-
-}
-
+//--------------------------------------------------Funciones Basicas de la lista-----------------------------------------------
 void agregarAlInicio(Lista* l, DATO d){
     Nodo* n = (Nodo*)malloc(sizeof(Nodo));
 
@@ -228,6 +199,117 @@ DATO eliminarDatoFinal(Lista* l){
     return eliminarDatoDeLaLista(l, l->iTamanioLista-1);
 }
 
+//--------------------------------------------------Funciones Extras de la lista-------------------------------------------------
+int posicionrDatoEnLaLista(Lista* l, DATO d){
+    Nodo* actual = l->inicio;
+    int iPos = DATO_NO_ENCONTRADO, i = 0;
+
+    while(iPos == DATO_NO_ENCONTRADO && actual != NULL){
+
+        if(actual->dato == d)
+            iPos = i;
+
+        i++;
+        actual = actual->siguiente;
+    }
+
+    return iPos;
+}
+
+int buscarDatoEnLaLista(Lista* l, DATO dato_Buscado, bool comparar(DATO dato_Buscado, DATO dato)){
+    /*int iContador = 0, iPosicion = DATO_NO_ENCONTRADO;
+    DATO aux;
+
+    while ((iContador < l->iTamanioLista) && (iPosicion == DATO_NO_ENCONTRADO)) {
+        aux = obtenerDatoDeLaLista(l, iContador);
+
+        if (comparar(dato_Buscado, aux))
+            iPosicion = iContador;
+
+        iContador++;
+    }
+
+    return iPosicion;*/
+
+    Nodo* nodo_actual = l->inicio;
+    int iPosicion = 0;
+
+    while (nodo_actual != NULL) {
+        if (comparar(dato_Buscado, nodo_actual->dato)) {
+            return iPosicion;  // Devolver la posición si se encontró el dato
+        }
+        nodo_actual = nodo_actual->siguiente;
+        iPosicion++;
+    }
+
+    return DATO_NO_ENCONTRADO;  // Devolver DATO_NO_ENCONTRADO si no se encontró el
+
+}
+
+void mostrarLista(Lista* l, void mostrarDato(DATO)){
+    DATO d;
+
+    for(int i=0; i<l->iTamanioLista; i++){
+        d = obtenerDatoDeLaLista(l, i);
+        printf("%d) ", i);
+        mostrarDato(d);
+        puts("");
+    }
+
+}
+
+void invertirDatos(Lista* l, int iPosicion1, int iPosicion2){
+
+    if(iPosicion1 != iPosicion2 && existePosicion(l, iPosicion1) && existePosicion(l, iPosicion2)){
+            int iAux;
+
+            if (iPosicion1 > iPosicion2) {
+                iAux = iPosicion1;
+                iPosicion1 = iPosicion2;
+                iPosicion2 = iAux;
+            }
+
+            DATO d1, d2;
+
+            d1 = obtenerDatoDeLaLista(l, iPosicion1);
+            d2 = obtenerDatoDeLaLista(l, iPosicion2);
+
+            agregarALaLista(l, iPosicion2, d1);
+            agregarALaLista(l, iPosicion1, d2);
+
+            d1 = eliminarDatoDeLaLista(l, iPosicion1+1);
+            d2 = eliminarDatoDeLaLista(l, iPosicion2+1);
+    }
+
+}
+
+bool ascendente(int iComparacion) {
+    return (iComparacion == MAYOR) ? true : false;
+}
+
+bool descendente(int iComparacion) {
+    return (iComparacion == MENOR) ? true : false;
+}
+
+void ordenarLista(Lista* l, int comparar(DATO d1, DATO d2), bool criterio(int)){
+    DATO d1, d2;
+
+    for(int i=0; i<l->iTamanioLista; i++){
+
+        for(int j=(i+1); j<l->iTamanioLista; j++){
+
+            d1 = obtenerDatoDeLaLista(l, i);
+            d2 = obtenerDatoDeLaLista(l, j);
+
+            if (criterio(comparar(d1, d2)))
+                invertirDatos(l, i, j);
+
+        }
+
+    }
+
+}
+
 //-----------------------------------------------------------Destructores-------------------------------------------------------
 void destruirLista(Lista* l){
     DATO d = NULL;
@@ -235,6 +317,17 @@ void destruirLista(Lista* l){
     while(l->iTamanioLista > 0){
         d = eliminarDatoInicial(l);
         free(d);
+    }
+
+    free(l);
+}
+
+void destruirListaYDatos(Lista* l, void eliminarDatos(DATO)){
+    DATO d;
+
+    while (l->iTamanioLista > 0) {
+        d = eliminarDatoInicial(l);
+        eliminarDatos(d);
     }
 
     free(l);

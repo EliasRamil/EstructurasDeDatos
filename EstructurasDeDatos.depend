@@ -1,25 +1,27 @@
 # depslib dependency file v1.0
-1713677044 source:d:\2024_unla\ayed_2024\estructurasdedatos\main.c
+1713759365 source:d:\2024_unla\ayed_2024\estructurasdedatos\main.c
 	<stdio.h>
 	<stdlib.h>
 	"Funciones.h"
 	"Lista.h"
 	"Persona.h"
 
-1713680089 source:d:\2024_unla\ayed_2024\estructurasdedatos\lista.c
+1713758442 source:d:\2024_unla\ayed_2024\estructurasdedatos\lista.c
 	<stdio.h>
 	<stdlib.h>
-	<stdbool.h>
 	"Lista.h"
 
-1713674421 d:\2024_unla\ayed_2024\estructurasdedatos\lista.h
+1713756710 d:\2024_unla\ayed_2024\estructurasdedatos\lista.h
+	<stdbool.h>
 
-1713661002 source:d:\2024_unla\ayed_2024\estructurasdedatos\funciones.c
+1713758843 source:d:\2024_unla\ayed_2024\estructurasdedatos\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	"Persona.h"
+	"Lista.h"
 
-1713660799 d:\2024_unla\ayed_2024\estructurasdedatos\funciones.h
+1713758843 d:\2024_unla\ayed_2024\estructurasdedatos\funciones.h
+	<stdbool.h>
 
 1713663788 source:d:\2024_unla\ayed_2024\estructurasdedatos\persona.c
 	<stdio.h>
