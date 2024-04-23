@@ -1,19 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Funciones.h"
 #include "Lista.h"
 #include "Persona.h"
-
-/* Preguntas:
-1. Si el destruirLista libera bien la memoria.
-2. Si al eliminar es correcto que haga el free(actual) o si afecta al dato.
-*/
-
-/* Falta implementar:
-1. Ordenar lista.
-2. Buscar en una Lista de un TDA 1 dato en base al por ej DNI
-*/
+#include "Funciones.h"
 
 int main(void)
 {
@@ -39,6 +29,14 @@ int main(void)
     ordenarLista(listEnteros, compararEnteros, descendente);
     mostrarLista(listEnteros, mostrarEnteros);
 
+    puts("");
+    int* iNum5 = (int*)malloc(sizeof(int));
+    *iNum5 = 11;
+    agregarDatoEnOrden(listEnteros, iNum5, compararEnteros, descendente);
+    int a = 19;
+    agregarDatoEnOrden(listEnteros, (DATO)&a, compararEnteros, descendente);
+    mostrarLista(listEnteros, mostrarEnteros);
+
     destruirLista(listEnteros);
 
     printf("\n\nPresionar Enter para continuar...\n");
@@ -60,6 +58,8 @@ int main(void)
 
     mostrarLista(listPersona, mostrarPersonasLista);
     printf("\n---------------------------\n");
+    Persona* aux = (Persona*)obtenerDatoInicial(listPersona);
+    setNombre(aux, "Pedro");
     mostrarPersonasLista(temp);
 
     printf("\n---------------------------\n");
@@ -67,8 +67,20 @@ int main(void)
     int resultado;
 
     // Llamar a la función buscarDatoEnLaLista y mostrar el resultado
-    resultado = buscarDatoEnLaLista(listPersona, &edad, compararEdad);
+    resultado = buscarDatoEnLaLista(listPersona, &edad, buscarPorEdad);
     mostrarPersonasLista(obtenerDatoDeLaLista(listPersona, resultado));
+
+    printf("\n---------------------------\n");
+    Lista* copiaListaPersona = duplicarLista(listPersona);
+    mostrarLista(copiaListaPersona, mostrarPersonasLista);
+
+    printf("\n---------------------------\n");
+    edad = 19;
+    Lista* personasDeLaEdadBuscada = buscarTodosLosDatosQueCumplanUnCriterioEnLaLista(listPersona, &edad, buscarPorEdad);
+    mostrarLista(personasDeLaEdadBuscada, mostrarEnteros);
+
+    destruirListaYDatos(listPersona, eliminarPersonasEnLista);
+    destruirLista(personasDeLaEdadBuscada);
 
     puts("");
     return 0;

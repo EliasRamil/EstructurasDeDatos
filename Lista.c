@@ -216,34 +216,38 @@ int posicionrDatoEnLaLista(Lista* l, DATO d){
     return iPos;
 }
 
-int buscarDatoEnLaLista(Lista* l, DATO dato_Buscado, bool comparar(DATO dato_Buscado, DATO dato)){
-    /*int iContador = 0, iPosicion = DATO_NO_ENCONTRADO;
+int buscarDatoEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato)){
+    int iContador = 0, iPosicion = DATO_NO_ENCONTRADO;
     DATO aux;
 
     while ((iContador < l->iTamanioLista) && (iPosicion == DATO_NO_ENCONTRADO)) {
         aux = obtenerDatoDeLaLista(l, iContador);
 
-        if (comparar(dato_Buscado, aux))
+        if (buscarPor(dato_Buscado, aux))
             iPosicion = iContador;
 
         iContador++;
     }
 
-    return iPosicion;*/
+    return iPosicion;
+}
 
-    Nodo* nodo_actual = l->inicio;
+Lista* buscarTodosLosDatosQueCumplanUnCriterioEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato)){
+    Lista* listaPosiciones = crearLista();
     int iPosicion = 0;
 
-    while (nodo_actual != NULL) {
-        if (comparar(dato_Buscado, nodo_actual->dato)) {
-            return iPosicion;  // Devolver la posición si se encontró el dato
+    while (iPosicion < l->iTamanioLista) {
+
+        if (buscarPor(dato_Buscado, obtenerDatoDeLaLista(l, iPosicion))) {
+            int* pos = malloc(sizeof(int));
+            *pos = iPosicion;
+            agregarAlFinal(listaPosiciones, (DATO)pos);
         }
-        nodo_actual = nodo_actual->siguiente;
+
         iPosicion++;
     }
 
-    return DATO_NO_ENCONTRADO;  // Devolver DATO_NO_ENCONTRADO si no se encontró el
-
+    return listaPosiciones;
 }
 
 void mostrarLista(Lista* l, void mostrarDato(DATO)){
@@ -308,6 +312,25 @@ void ordenarLista(Lista* l, int comparar(DATO d1, DATO d2), bool criterio(int)){
 
     }
 
+}
+
+Lista* duplicarLista(Lista* l){
+    Lista* ld = crearLista();
+    DATO d;
+
+    for(int i=0; i<l->iTamanioLista; i++){
+
+        d = obtenerDatoDeLaLista(l, i);
+        agregarALaLista(ld, i, d);
+
+    }
+
+    return ld;
+}
+
+void agregarDatoEnOrden(Lista* l, DATO d, int comparar(DATO d1, DATO d2), bool criterio(int)){
+    agregarAlInicio(l, d);
+    ordenarLista(l, comparar, criterio);
 }
 
 //-----------------------------------------------------------Destructores-------------------------------------------------------

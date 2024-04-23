@@ -12,11 +12,11 @@ void limpiarPantalla(){
     #endif
 }
 
-void mostrarEnteros(void* d){
+void mostrarEnteros(DATO d){
     printf("%d", *((int*)d));
 }
 
-int compararEnteros(void* d1, void* d2){
+int compararEnteros(DATO d1, DATO d2){
     int iRetorno = IGUAL;
 
     int* valor1 = (int*)d1;
@@ -31,14 +31,14 @@ int compararEnteros(void* d1, void* d2){
     return iRetorno;
 }
 
-void mostrarPersonasLista(void* d){
+void mostrarPersonasLista(DATO d){
     printf("%s", personaToString((Persona*)d));
 }
 
-void eliminarPersonasEnLista(void* p){
+void eliminarPersonasEnLista(DATO p){
     destruirPersona((Persona*)p);
 }
 
-bool compararEdad(void* a, void* b){
+bool buscarPorEdad(DATO a, DATO b){
     return (*((int*)a) == getEdad((Persona*)b)) ? true : false;
 }

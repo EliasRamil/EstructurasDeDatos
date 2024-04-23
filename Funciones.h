@@ -3,13 +3,15 @@
 
 #include <stdbool.h>
 
+#include "Lista.h"
+
 void limpiarPantalla();
 
-void mostrarEnteros(void*);
-int compararEnteros(void*, void*);
+void mostrarEnteros(DATO);
+int compararEnteros(DATO, DATO);
 
-void mostrarPersonasLista(void*);
-void eliminarPersonasEnLista(void*);
-bool compararEdad(void*, void*);
+void mostrarPersonasLista(DATO);
+void eliminarPersonasEnLista(DATO);
+bool buscarPorEdad(DATO, DATO);
 
 #endif // FUNCIONES_H_INCLUDED

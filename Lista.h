@@ -96,7 +96,13 @@ int posicionrDatoEnLaLista(Lista*, DATO);
  *  preferentemente se lo utiliza para comparar TDA si deseo comparar en base a 1 TD que lo forma (atributo), en caso de buscar elementos en una lista de TD o TDA utilizar mejor la funcion posicionElementoEnLaLista.
     POST: Indico la posicion de donde se encuentra el elemento en la lista o ELEMENTO_NO_ENCONTRADO(-1) si es que en la lista no existe.
  */
-int buscarDatoEnLaLista(Lista*, DATO dato_Buscado, bool comparar(DATO dato_Buscado, DATO dato));
+int buscarDatoEnLaLista(Lista*, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato));
+
+/*
+    PRE: La lista donde se va a almacenar no debe haber sido creada. La Lista en la que voy a buscar tiene que exisitir.
+    POST: Retorno una lista con las posiciones donde estan los elementos que coinciden con el criterio de busqueda.
+*/
+Lista* buscarTodosLosDatosQueCumplanUnCriterioEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato));
 
 /*
     PRE: La lista debe haber sido creada y debe existir una funcion que muestre 1 tipo de dato en particular.
@@ -127,6 +133,19 @@ bool descendente(int);
     POST: Ordeno la lista en forma ascendente o descendente segun se indique en el tercer parametro.
 */
 void ordenarLista(Lista*, int comparar(DATO d1, DATO d2), bool criterio(int));
+
+/*
+    PRE: La lista donde se va a duplicar NO debe haber sido creada, debe existir la lista que se desea copiar.
+    POST: Crea una lista en la cual se retornan los datos duplicados de la lista original.
+*/
+Lista* duplicarLista(Lista*);
+
+/*
+    PRE: La lista debe haber sido creada.
+    POST: Agrega 1 dato a la lista de forma ordenada segun lo que se le indique en el 3er parametro (funcion que debe ser creada)
+          Y se le indica en el 4to parametro si el orden es ascente o descende.
+*/
+void agregarDatoEnOrden(Lista*, DATO, int comparar(DATO d1, DATO d2), bool criterio(int));
 
 //-----------------------------------------------------------Destructores-------------------------------------------------------
 /*
