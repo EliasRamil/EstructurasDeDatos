@@ -217,10 +217,10 @@ int posicionrDatoEnLaLista(Lista* l, DATO d){
 }
 
 int buscarDatoEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato)){
-    int iContador = 0, iPosicion = DATO_NO_ENCONTRADO;
+    int iContador = 0, iPosicion = DATO_NO_ENCONTRADO, iTam = l->iTamanioLista;
     DATO aux;
 
-    while ((iContador < l->iTamanioLista) && (iPosicion == DATO_NO_ENCONTRADO)) {
+    while ((iContador < iTam) && (iPosicion == DATO_NO_ENCONTRADO)) {
         aux = obtenerDatoDeLaLista(l, iContador);
 
         if (buscarPor(dato_Buscado, aux))
@@ -234,9 +234,9 @@ int buscarDatoEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Bu
 
 Lista* buscarTodosLosDatosQueCumplanUnCriterioEnLaLista(Lista* l, DATO dato_Buscado, bool buscarPor(DATO dato_Buscado, DATO dato)){
     Lista* listaPosiciones = crearLista();
-    int iPosicion = 0;
+    int iPosicion = 0, iTam = l->iTamanioLista;
 
-    while (iPosicion < l->iTamanioLista) {
+    while (iPosicion < iTam) {
 
         if (buscarPor(dato_Buscado, obtenerDatoDeLaLista(l, iPosicion))) {
             int* pos = malloc(sizeof(int));
@@ -252,8 +252,9 @@ Lista* buscarTodosLosDatosQueCumplanUnCriterioEnLaLista(Lista* l, DATO dato_Busc
 
 void mostrarLista(Lista* l, void mostrarDato(DATO)){
     DATO d;
+    int iTam = l->iTamanioLista;
 
-    for(int i=0; i<l->iTamanioLista; i++){
+    for(int i=0; i<iTam; i++){
         d = obtenerDatoDeLaLista(l, i);
         printf("%d) ", i);
         mostrarDato(d);
@@ -297,10 +298,11 @@ bool descendente(int iComparacion) {
 
 void ordenarLista(Lista* l, int comparar(DATO d1, DATO d2), bool criterio(int)){
     DATO d1, d2;
+    int iTam = l->iTamanioLista;
 
-    for(int i=0; i<l->iTamanioLista; i++){
+    for(int i=0; i<iTam; i++){
 
-        for(int j=(i+1); j<l->iTamanioLista; j++){
+        for(int j=(i+1); j<iTam; j++){
 
             d1 = obtenerDatoDeLaLista(l, i);
             d2 = obtenerDatoDeLaLista(l, j);
@@ -317,8 +319,9 @@ void ordenarLista(Lista* l, int comparar(DATO d1, DATO d2), bool criterio(int)){
 Lista* duplicarLista(Lista* l){
     Lista* ld = crearLista();
     DATO d;
+    int iTam = l->iTamanioLista;
 
-    for(int i=0; i<l->iTamanioLista; i++){
+    for(int i=0; i<iTam; i++){
 
         d = obtenerDatoDeLaLista(l, i);
         agregarALaLista(ld, i, d);
@@ -329,8 +332,30 @@ Lista* duplicarLista(Lista* l){
 }
 
 void agregarDatoEnOrden(Lista* l, DATO d, int comparar(DATO d1, DATO d2), bool criterio(int)){
-    agregarAlInicio(l, d);
-    ordenarLista(l, comparar, criterio);
+    if(l->iTamanioLista > 0){
+        bool bInsertado = false;
+        int i = 0, iTam = l->iTamanioLista;
+        DATO aux;
+
+        while(i < iTam && !bInsertado){
+
+            aux = obtenerDatoDeLaLista(l, i);
+
+            if(criterio(comparar(aux, d))){
+                agregarALaLista(l, i, d);
+                bInsertado = true;
+            }
+
+            i++;
+        }
+
+        if(i == l->iTamanioLista){
+            agregarAlFinal(l, d);
+        }
+
+    } else
+        agregarAlInicio(l, d);
+
 }
 
 //-----------------------------------------------------------Destructores-------------------------------------------------------

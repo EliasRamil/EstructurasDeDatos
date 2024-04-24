@@ -26,14 +26,14 @@ int main(void)
     mostrarEnteros(obtenerDatoDeLaLista(listEnteros, posicionrDatoEnLaLista(listEnteros, iNum3)));
 
     puts("");
-    ordenarLista(listEnteros, compararEnteros, descendente);
+    ordenarLista(listEnteros, compararEnteros,descendente);
     mostrarLista(listEnteros, mostrarEnteros);
 
     puts("");
     int* iNum5 = (int*)malloc(sizeof(int));
     *iNum5 = 11;
     agregarDatoEnOrden(listEnteros, iNum5, compararEnteros, descendente);
-    int a = 19;
+    int a = 7;
     agregarDatoEnOrden(listEnteros, (DATO)&a, compararEnteros, descendente);
     mostrarLista(listEnteros, mostrarEnteros);
 
